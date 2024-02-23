@@ -59,7 +59,6 @@
 const navbarBaru = ref(false);
 
 const navbarclick = () => {
-    console.log("ini adalah log navbar", navbarBaru.value);
     navbarBaru.value = !navbarBaru.value
 }
 </script>

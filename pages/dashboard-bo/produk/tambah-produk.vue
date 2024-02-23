@@ -58,9 +58,6 @@ const formData = ref({
 
 const submitForm = async (e: any) => {
 
-    // Lakukan apa pun yang diperlukan ketika formulir disubmit
-    console.log('Form Submitted:', formData.value);
-
     // Ambil token dari tempat penyimpanan (misalnya localStorage)
     const token = useCookie('auth:token');
 

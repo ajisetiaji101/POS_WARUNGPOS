@@ -231,7 +231,9 @@ import { jwtDecode } from "jwt-decode";
 import type Product from '~/models/Product'
 import type CheckoutProductRequest from '~/models/CheckoutProductRequest'
 import type CategoryProduct from '~/models/CategoryProduct'
+import type ListResultResponse from '~/models/ListResultResponse';
 import { RupiahFormatter } from '~/utils/Formatter'
+import type Metadata from '~/models/Metadata';
 
 definePageMeta({
     auth: true
@@ -252,6 +254,13 @@ const totalPembayaran = ref(0);
 const subDiskon = ref(0);
 const subCash = ref(0);
 const subKembalian = ref(0);
+const metadata: Ref<Metadata> = ref({
+    total_items: 0,
+    page: 0,
+    perpage: 0,
+    total_pages: 0,
+});
+let page = ref(1);
 let subError: boolean = false
 let isPopupVisible: boolean = false;
 let isPopupVisibleDiskon: boolean = false;
@@ -277,9 +286,10 @@ async function getData() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/product/findall", config);
-        const finalRes: Product[] = res.data.data;
-        listItems.value = finalRes;
+        const res = await axios.get("http://localhost:8080/api/v1/product/findall?page=" + page.value + "&size=30", config);
+        const finalRes: ListResultResponse<Product> = res.data.data;
+        listItems.value.push(...(finalRes.data || []));
+        metadata.value = finalRes.metadata;
     } catch (error) {
         console.error('Error fetching data:', error);
     }
@@ -427,8 +437,6 @@ async function handleSingOut() {
 }
 
 const addCartItem = (item: Product) => {
-
-    console.log(cartItems.value);
 
     const existingProduct = Array.from(cartItems.value).find((product) => product === item);
 
@@ -635,6 +643,34 @@ const closePopKembalian = () => {
     isPopupVisibleKembalian = false;
 }
 
+const scroll = () => {
+    if (process.client) {
+        let lastScrollTop = 0;
+        window.onscroll = () => {
+            let bottomOfWindow = Math.max(window.pageYOffset, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.offsetHeight;
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (bottomOfWindow && scrollTop > lastScrollTop) {
+                // Scroll ke bawah
+                lastScrollTop = scrollTop;
+                if (!(metadata.value.page == metadata.value.total_pages)) {
+                    page.value++
+                    if (listItems.value) {
+                        getData();
+                    }
+                }
+            } else {
+                // Scroll ke atas
+                lastScrollTop = scrollTop;
+                // Lakukan sesuatu untuk scroll ke atas di sini
+                console.log('Scrolling up');
+            }
+        }
+    }
+}
+
+
+scroll();
 getData();
 getCategory();
 </script>
