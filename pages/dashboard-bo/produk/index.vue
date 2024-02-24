@@ -2,6 +2,7 @@
     <DashboardBo>
         <div class="w-full m-4">
             <vue3-datatable :rows="listItems" :columns="cols" :loading="loading" :sortable="true" :columnFilter="true"
+                :isServerMode="true" :totalRows="total_rows" :pageSize="params.pagesize" @change="changeServer"
                 skin="bh-table-bordered">
                 <template #product_price="data">
                     <strong class="text-info">{{ formatToRupiah(data.value.product_price) }}</strong>
@@ -18,10 +19,25 @@ import "@bhplugin/vue3-datatable/dist/style.css";
 import type Product from "~/models/Product";
 import axios from "axios";
 import DashboardBo from "../dashboard-bo.vue";
+import type Metadata from "~/models/Metadata";
+import type ListResultResponse from "~/models/ListResultResponse";
 
 
 const listItems: Ref<Product[]> = ref([]);
 const loading: any = ref(true);
+let total_rows = ref(0);
+const params = reactive({
+    current_page: 1,
+    pagesize: 10,
+    sort_column: 'id',
+    sort_direction: 'asc',
+});
+const metadata: Ref<Metadata> = ref({
+    total_items: 0,
+    page: 0,
+    perpage: 0,
+    total_pages: 0,
+});
 
 const cols =
     ref([
@@ -52,16 +68,26 @@ async function getData() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/product/findall", config);
-        const finalRes: Product[] = res.data.data;
+        const res = await axios.get("http://localhost:8080/api/v1/product/findall?page=" + params.current_page + "&size=" + params.pagesize, config);
+        const finalRes: ListResultResponse<Product> = res.data.data;
+        listItems.value = finalRes.data;
 
-        listItems.value = finalRes;
+        metadata.value = finalRes.metadata;
+
+        total_rows.value = metadata.value.total_items;
 
         loading.value = false;
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
+
+const changeServer = (data: any) => {
+    params.current_page = data.current_page;
+    params.pagesize = data.pagesize;
+
+    getData();
+};
 
 getData();
 

@@ -1,7 +1,7 @@
 <template>
     <section class="static">
         <!-- LOGO -->
-        <div class="py-4 px-8 shadow-md flex justify-between w-2/3">
+        <div class="py-4 px-8 shadow-md flex justify-between w-2/3 top">
             <h1 class="text-xl font-semibold text-red-400 flex-initial w-80">
                 <Icon name="healthicons:market-stall-outline" class=" font-semibold text-red-400 text-3xl font-poppins" />
                 WarungPOS
