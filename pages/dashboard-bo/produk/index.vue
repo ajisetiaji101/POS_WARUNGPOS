@@ -87,7 +87,7 @@ async function getData() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/product/findall?page=" + params.current_page + "&size=" + params.pagesize, config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/product/findall?page=" + params.current_page + "&size=" + params.pagesize, config);
         const finalRes: ListResultResponse<Product> = res.data.data;
         listItems.value = finalRes.data;
 

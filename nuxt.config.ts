@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   },
   auth: {
     globalAppMiddleware: true,
-    baseURL:"http://localhost:8080/api/v1",
+    baseURL:"http://43.243.187.6:6060/api/v1",
     provider: {
       type: 'local',
       endpoints: {

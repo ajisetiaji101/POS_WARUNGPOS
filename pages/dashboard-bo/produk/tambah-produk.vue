@@ -44,7 +44,8 @@
                     <div class="mb-4">
                         <label for="product_category_2" class="block text-sm font-bold mb-2">Sub Kategori :</label>
                         <select type="text" id="product_category_2" name="product_category_2"
-                            v-model="formData.product_category_2" class="border rounded w-full py-2 px-3 border-red-500">
+                            v-model="formData.product_category_2"
+                            class="border rounded w-full py-2 px-3 border-red-500">
                             <option value="" disabled selected>Pilih Sub Kategori</option>
                             <!-- Check this loop -->
                             <option v-for="cat in listCategoryLvl2" :value="cat.id">{{ cat.category_name }}</option>
@@ -60,12 +61,12 @@
         </div>
     </DashboardBo>
 </template>
-  
+
 <script setup lang="ts">
 import axios from "axios";
 import type CategoryProduct from "~/models/CategoryProduct";
 import DashboardBo from "~/pages/dashboard-bo/dashboard-bo.vue";
-
+ 
 const productEror = ref<string | null>(null);
 const productBerhasil = ref<string | null>(null);
 const listCategory = ref<CategoryProduct[] | null>(null);
@@ -102,7 +103,7 @@ const submitForm = async (e: any) => {
 
     try {
         e.preventDefault()
-        let res = await axios.post("http://localhost:8080/api/v1/product/addProduct", formData.value, config);
+        let res = await axios.post("http://43.243.187.6:6060/api/v1/product/addProduct", formData.value, config);
         productBerhasil.value = res.data.data;
     } catch (error: any) {
 
@@ -141,7 +142,7 @@ async function getDataCategory() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/category/findall", config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/category/findall", config);
         const finalRes: CategoryProduct[] = res.data.data;
 
         listCategory.value = finalRes;
@@ -187,4 +188,3 @@ getDataCategory();
 
 
 </script>
-  

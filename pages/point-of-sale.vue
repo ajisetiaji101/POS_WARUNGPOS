@@ -437,7 +437,7 @@ async function getData() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/product/findall?page=" + page.value + "&size=30", config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/product/findall?page=" + page.value + "&size=30", config);
         const finalRes: ListResultResponse<Product> = res.data.data;
         listItems.value.push(...(finalRes.data || []));
         metadata.value = finalRes.metadata;
@@ -464,7 +464,7 @@ async function getDataCategoryLevel1(e?: number) {
                 'Authorization': `Bearer ${token.value}`,
             }
         };
-        const res = await axios.get("http://localhost:8080/api/v1/product/findProductByCategoryLevel1?id=" + e, config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/product/findProductByCategoryLevel1?id=" + e, config);
         const finalRes: Product[] = res.data.data;
         listItems.value = finalRes;
     } catch (error) {
@@ -492,7 +492,7 @@ async function getDataCategoryLevel2(e?: number) {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/product/findProductByCategoryLevel2?id=" + e, config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/product/findProductByCategoryLevel2?id=" + e, config);
         const finalRes: Product[] = res.data.data;
         listItems.value = finalRes;
     } catch (error) {
@@ -521,7 +521,7 @@ async function getDataSearch() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/product/search?product=" + productSearch.value + "&page=" + page.value + "&size=30", config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/product/search?product=" + productSearch.value + "&page=" + page.value + "&size=30", config);
         const finalRes: ListResultResponse<Product> = res.data.data;
         listItems.value = finalRes.data || [];
         metadata.value = finalRes.metadata;
@@ -548,7 +548,7 @@ async function getCategory() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/category?warungId=" + decoded.warung_pos_identity, config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/category?warungId=" + decoded.warung_pos_identity, config);
         const finalRes: CategoryProduct[] = res.data.data;
         listCatgeory.value = finalRes;
     } catch (error) {
@@ -599,7 +599,7 @@ async function checkout() {
         checkoutRequest.value.qtyCart = cartItems.value.size;
 
 
-        const res = await axios.post("http://localhost:8080/api/v1/product/checkout", checkoutRequest.value, config);
+        const res = await axios.post("http://43.243.187.6:6060/api/v1/product/checkout", checkoutRequest.value, config);
 
         getData();
         orderTotal();
@@ -633,7 +633,7 @@ async function orderTotal() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/order/getOrderNext", config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/order/getOrderNext", config);
 
         orderNumberList.value = res.data.data;
 
@@ -663,7 +663,7 @@ async function orderHistoryProduct() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/order/getOrderByOwner", config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/order/getOrderByOwner", config);
 
         orderHistoryItem.value = res.data.data;
 

@@ -83,7 +83,7 @@ async function getData() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/user/findByOwner?page=" + params.current_page + "&size=" + params.pagesize, config);
+        const res = await axios.get("http://43.243.187.6:6060/api/v1/user/findByOwner?page=" + params.current_page + "&size=" + params.pagesize, config);
         const finalRes: ListResultResponse<User> = res.data.data;
         listUsers.value = finalRes.data;
 

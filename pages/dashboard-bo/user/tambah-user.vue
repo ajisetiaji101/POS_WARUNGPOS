@@ -64,7 +64,7 @@ import axios from "axios";
 import DashboardBo from "~/pages/dashboard-bo/dashboard-bo.vue";
 
 const productEror = ref<string | null>(null);
-const productBerhasil = ref<string | null>(null);
+const productBe rhasil = ref<string | null>(null);
 const Role = [
     { id: 1, category_name: "Admin" },
     { id: 2, category_name: "Kasir" },
@@ -103,7 +103,7 @@ const submitForm = async (e: any) => {
 
     try {
         e.preventDefault()
-        let res = await axios.post("http://localhost:8080/api/v1/user/createNewUserByOwner", formData.value, config);
+        let res = await axios.post("http://43.243.187.6:6060/api/v1/user/createNewUserByOwner", formData.value, config);
         productBerhasil.value = res.data.data;
     } catch (error: any) {
 

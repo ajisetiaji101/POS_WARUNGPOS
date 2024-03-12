@@ -110,9 +110,9 @@ definePageMeta({
     auth: false
 })
 
-const registrasiError = ref<string | null>(null);
+const registrasiError = ref<string | null>(null); 
 const registrasiBerhasil = ref<string | null>(null);
-const zoom = ref(10);
+const zoo m = ref(10);
 const userLocation = ref({ lat: -6.2088, lng: 106.8456 });
 let location: [number, number] = [userLocation.value.lat, userLocation.value.lng]
 const mapRef = ref(null);
@@ -145,7 +145,7 @@ const formData = reactive({
 const registrasi = async (e: any) => {
     try {
         e.preventDefault()
-        let res = await axios.post("http://localhost:8080/api/v1/user/registrasi", formData);
+        let res = await axios.post("http://43.243.187.6:6060/api/v1/user/registrasi", formData);
         registrasiBerhasil.value = res.data.data;
     } catch (error: any) {
 
