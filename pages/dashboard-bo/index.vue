@@ -1,6 +1,6 @@
 <template>
     <DashboardBo>
-        <div class="w-full">
+        <div class="w-full m-4 pt-16">
             <div class="grid grid-cols-3 gap-4 p-4 w-full font-poppins">
                 <div class="shadow-md h-96 p-4 rounded-md">
                     <h1>Pembelian Terbanyak</h1>
@@ -27,11 +27,14 @@
         </div>
     </DashboardBo>
 </template>
-  
+
 <script setup lang="ts">
 import { PieChart, BarChart, LineChart } from 'vue-chart-3';
 import { Chart, registerables } from 'chart.js';
 import DashboardBo from './dashboard-bo.vue';
+
+
+//LIST GRAFIK
 
 Chart.register(...registerables);
 
@@ -92,6 +95,6 @@ const dataLine = {
         tension: 0.1
     }]
 };
+// 
 
 </script>
-  

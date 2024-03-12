@@ -3,24 +3,19 @@
         <div class="w-full m-4 pt-16">
             <div class="flex justify-end">
                 <NuxtLink to="/dashboard-bo/produk/tambah-produk"
-                    class="py-2 px-4 text-white bg-red-500 rounded-md mb-4">
-                    Tambah
-                </NuxtLink>
-                <NuxtLink to="/dashboard-bo/produk/tambah-produk"
                     class="py-2 px-4 ml-2 text-white bg-green-500 rounded-md mb-4">
                     Print
                 </NuxtLink>
             </div>
-            <vue3-datatable :rows="listItems" :columns="cols" :loading="loading" :sortable="true" :columnFilter="true"
+            <vue3-datatable :rows="listWarung" :columns="cols" :loading="loading" :sortable="true" :columnFilter="true"
                 :isServerMode="true" :totalRows="total_rows" :pageSize="params.pagesize" :hasCheckbox="true"
                 @change="changeServer" skin="bh-table-bordered">
-                <template #product_price="data">
-                    <strong class="text-info">{{ formatToRupiah(data.value.product_price) }}</strong>
-                </template>
                 <template #actions="data">
                     <div class="flex gap-4">
                         <button type="button" class=" bg-green-500 text-white px-4 py-2 rounded-md"
                             @click="viewUser(data.value)">View</button>
+                        <button type="button" class="  bg-blue-500 text-white px-4 py-2 rounded-md"
+                            @click="viewUser(data.value)">Approve</button>
                         <button type="button" class="bg-red-500 text-white px-4 py-2 rounded-md"
                             @click="deleteUser(data.value)">Delete</button>
                     </div>
@@ -39,9 +34,11 @@ import axios from "axios";
 import DashboardBo from "../dashboard-bo.vue";
 import type Metadata from "~/models/Metadata";
 import type ListResultResponse from "~/models/ListResultResponse";
+import type { User } from "next-auth";
+import type { WarungResponse } from "~/models/WarungResponse";
 
 
-const listItems: Ref<Product[]> = ref([]);
+const listWarung: Ref<WarungResponse[]> = ref([]);
 const loading: any = ref(true);
 let total_rows = ref(0);
 const params = reactive({
@@ -59,13 +56,14 @@ const metadata: Ref<Metadata> = ref({
 
 const cols =
     ref([
-        { field: 'id', title: 'ID', isUnique: true },
-        { field: 'serial_number', title: 'Serial Number' },
-        { field: 'product_name', title: 'Name' },
-        { field: 'product_price', title: 'Harga', type: 'number' },
-        { field: 'stok', title: 'Stok', type: 'number' },
-        { field: 'product_sold_over', title: 'Stok Over', type: 'number' },
-        { field: 'product_sold', title: 'Terjual', type: 'number' },
+        { field: 'id_warung', title: 'ID' },
+        { field: 'nama_warung', title: 'Nama' },
+        { field: 'alamat', title: 'Alamat' },
+        { field: 'telephone', title: 'Telepon' },
+        { field: 'lat', title: 'Lat' },
+        { field: 'lng', title: 'Lng' },
+        { field: 'verified', title: 'Verified' },
+        { field: 'email_user', title: 'email' },
         { field: 'actions', title: 'Actions' },
     ]) || [];
 
@@ -87,9 +85,9 @@ async function getData() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/product/findall?page=" + params.current_page + "&size=" + params.pagesize, config);
-        const finalRes: ListResultResponse<Product> = res.data.data;
-        listItems.value = finalRes.data;
+        const res = await axios.get("http://localhost:8080/api/v1/warung/findAllWarung?page=" + params.current_page + "&size=" + params.pagesize, config);
+        const finalRes: ListResultResponse<WarungResponse> = res.data.data;
+        listWarung.value = finalRes.data;
 
         metadata.value = finalRes.metadata;
 
@@ -116,10 +114,5 @@ const deleteUser = (data: Product) => {
 };
 
 getData();
-
-const formatToRupiah = (e: number | undefined) => {
-    const toRupiah = new RupiahFormatter();
-    return toRupiah.format(e);
-}
 
 </script>

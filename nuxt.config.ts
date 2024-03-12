@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['nuxt-icon', '@nuxtjs/google-fonts', "@nuxt/image", '@sidebase/nuxt-auth', '@pinia/nuxt'],
+  modules: ['nuxt-icon', '@nuxtjs/google-fonts', "@nuxt/image", '@sidebase/nuxt-auth', '@pinia/nuxt','nuxt3-leaflet'],
   css: ['~/assets/css/main.css'],
   postcss: {
   plugins: {

@@ -16,9 +16,12 @@
     "@sidebase/nuxt-auth": "^0.6.7",
     "@types/jsonwebtoken": "^9.0.5",
     "autoprefixer": "^10.4.16",
+    "lean-qr": "^2.3.4",
     "nuxt": "^3.8.2",
     "nuxt-icon": "^0.6.7",
+    "nuxt3-leaflet": "^1.0.12",
     "postcss": "^8.4.32",
+    "qr-code-styling": "^1.6.0-rc.1",
     "tailwind-scrollbar": "^3.0.5",
     "vue": "^3.3.12",
     "vue-router": "^4.2.5"
@@ -31,6 +34,7 @@
     "axios": "^1.6.3",
     "chart.js": "^4.4.1",
     "jwt-decode": "^4.0.0",
+    "leaflet": "^1.9.4",
     "next-auth": "4.22.5",
     "pinia": "^2.1.7",
     "vue-chart-3": "^3.1.8"

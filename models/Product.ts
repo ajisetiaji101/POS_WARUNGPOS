@@ -13,4 +13,7 @@ export default interface Product {
 
     //cart
     total?: number;
+
+    //orderHistory
+    qty?: number;
 }

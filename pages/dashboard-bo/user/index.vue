@@ -2,8 +2,7 @@
     <DashboardBo>
         <div class="w-full m-4 pt-16">
             <div class="flex justify-end">
-                <NuxtLink to="/dashboard-bo/produk/tambah-produk"
-                    class="py-2 px-4 text-white bg-red-500 rounded-md mb-4">
+                <NuxtLink to="/dashboard-bo/user/tambah-user" class="py-2 px-4 text-white bg-red-500 rounded-md mb-4">
                     Tambah
                 </NuxtLink>
                 <NuxtLink to="/dashboard-bo/produk/tambah-produk"
@@ -11,12 +10,9 @@
                     Print
                 </NuxtLink>
             </div>
-            <vue3-datatable :rows="listItems" :columns="cols" :loading="loading" :sortable="true" :columnFilter="true"
+            <vue3-datatable :rows="listUsers" :columns="cols" :loading="loading" :sortable="true" :columnFilter="true"
                 :isServerMode="true" :totalRows="total_rows" :pageSize="params.pagesize" :hasCheckbox="true"
                 @change="changeServer" skin="bh-table-bordered">
-                <template #product_price="data">
-                    <strong class="text-info">{{ formatToRupiah(data.value.product_price) }}</strong>
-                </template>
                 <template #actions="data">
                     <div class="flex gap-4">
                         <button type="button" class=" bg-green-500 text-white px-4 py-2 rounded-md"
@@ -39,9 +35,10 @@ import axios from "axios";
 import DashboardBo from "../dashboard-bo.vue";
 import type Metadata from "~/models/Metadata";
 import type ListResultResponse from "~/models/ListResultResponse";
+import type { User } from "next-auth";
 
 
-const listItems: Ref<Product[]> = ref([]);
+const listUsers: Ref<User[]> = ref([]);
 const loading: any = ref(true);
 let total_rows = ref(0);
 const params = reactive({
@@ -59,13 +56,12 @@ const metadata: Ref<Metadata> = ref({
 
 const cols =
     ref([
-        { field: 'id', title: 'ID', isUnique: true },
-        { field: 'serial_number', title: 'Serial Number' },
-        { field: 'product_name', title: 'Name' },
-        { field: 'product_price', title: 'Harga', type: 'number' },
-        { field: 'stok', title: 'Stok', type: 'number' },
-        { field: 'product_sold_over', title: 'Stok Over', type: 'number' },
-        { field: 'product_sold', title: 'Terjual', type: 'number' },
+        { field: 'email', title: 'Email' },
+        { field: 'username', title: 'Username' },
+        { field: 'name', title: 'Name' },
+        { field: 'level', title: 'Level' },
+        { field: 'nik', title: 'NIK' },
+        { field: 'foto', title: 'Foto' },
         { field: 'actions', title: 'Actions' },
     ]) || [];
 
@@ -87,9 +83,9 @@ async function getData() {
             }
         };
 
-        const res = await axios.get("http://localhost:8080/api/v1/product/findall?page=" + params.current_page + "&size=" + params.pagesize, config);
-        const finalRes: ListResultResponse<Product> = res.data.data;
-        listItems.value = finalRes.data;
+        const res = await axios.get("http://localhost:8080/api/v1/user/findByOwner?page=" + params.current_page + "&size=" + params.pagesize, config);
+        const finalRes: ListResultResponse<User> = res.data.data;
+        listUsers.value = finalRes.data;
 
         metadata.value = finalRes.metadata;
 
