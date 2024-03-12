@@ -64,7 +64,7 @@ import axios from "axios";
 import DashboardBo from "~/pages/dashboard-bo/dashboard-bo.vue";
 
 const productEror = ref<string | null>(null);
-const productBe rhasil = ref<string | null>(null);
+const productBerhasil = ref<string | null>(null);
 const Role = [
     { id: 1, category_name: "Admin" },
     { id: 2, category_name: "Kasir" },

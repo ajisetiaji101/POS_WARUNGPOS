@@ -110,9 +110,9 @@ definePageMeta({
     auth: false
 })
 
-const registrasiError = ref<string | null>(null); 
+const registrasiError = ref<string | null>(null);
 const registrasiBerhasil = ref<string | null>(null);
-const zoo m = ref(10);
+const zoom = ref(10);
 const userLocation = ref({ lat: -6.2088, lng: 106.8456 });
 let location: [number, number] = [userLocation.value.lat, userLocation.value.lng]
 const mapRef = ref(null);
